@@ -9,8 +9,11 @@
       <div ng-repeat="item in snake.board track by $index" class="row">
         <p ng-repeat="square in snake.board[$index] track by $index" class="square" ng-class="snake.color(square)"></p>
       </div>
-      <h1>Score: {{snake.score}}</h1>
       <h1 ng-show="snake.lost">YOU LOSE</h1>
+      <h1>Score: {{snake.score}}</h1>
+      <ol>High Scores
+        <li ng-repeat="item in snake.topTen">{{item.name}}: {{item.score}}</li>
+      </ol>
     </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
