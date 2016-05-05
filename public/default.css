@@ -1,0 +1,28 @@
+.square{
+  display: inline-table;
+  height:20px;
+  width:20px;
+  margin:-2px;
+  padding: 0px;
+}
+
+.green{
+  background-color: green;
+}
+
+.black{
+  background-color: black;
+}
+
+.red{
+  background-color: red;
+}
+
+.brown{
+  background-color: brown;
+}
+
+.row{
+  margin:0px;
+  padding:0px;
+}

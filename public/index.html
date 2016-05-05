@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en_us">
+  <head>
+    <title>Snake</title>
+    <link rel="stylesheet" href="default.css">
+  </head>
+  <body id="body" ng-app="snake">
+    <div ng-controller="snakeController as snake">
+      <div ng-repeat="item in snake.board track by $index" class="row">
+        <p ng-repeat="square in snake.board[$index] track by $index" class="square" ng-class="snake.color(square)"></p>
+      </div>
+      <h1>Score: {{snake.score}}</h1>
+      <h1 ng-show="snake.lost">YOU LOSE</h1>
+    </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
+  <script src="default.js"></script>
+  <script src="snake.controller.js"></script>
+  </body>
+</html>
+
+<!--snake.color(snake.board[$index])-->
