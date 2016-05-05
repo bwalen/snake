@@ -24,6 +24,19 @@ app.get("/top", function(req, res){
   })
 })
 
+app.post("/post", function(req, res){
+  myClient.connect(url, function(error, database){
+    if(!error){
+      var snake = database.collection("snake");
+      todo.insert(req.body, function(result, error){
+        res.send(200);
+        database.close();
+      });
+    }
+  })
+})
+
+
 app.listen(port, function(){
   console.log("Listening on port " + port);
 });
