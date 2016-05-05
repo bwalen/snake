@@ -10,7 +10,6 @@ var port = process.env.PORT || 1337;
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-
 app.listen(port, function(){
   console.log("Listening on port " + port);
 });
