@@ -47,3 +47,8 @@ h3{
 .more-margin{
   margin-top: 10px;
 }
+
+.panel{
+  overflow: hidden;
+  height:80%;
+}
