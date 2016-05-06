@@ -16,7 +16,7 @@ function snake($http, $interval){
   vm.topTen=[];
   var highScores = $http.get("/top");
   highScores.then(function(highScores){
-    vm.topTen = highScores.data;
+    vm.topTen = _.sortBy(highScores.data,"score").reverse();
   })
   vm.addSnake = function(boardArray){
     for (var i = 0; i < vm.snake.length; i++)
@@ -59,6 +59,12 @@ function snake($http, $interval){
     var newX = vm.snake[vm.snake.length-1][1];
     if(vm.board[newY][newX] == 0 || vm.board[newY][newX] == 2){
       vm.lost = true;
+      var scoreSubmit = {name:vm.userName,score:vm.score};
+      var sendScore = $http.post("/post", scoreSubmit);
+      sendScore.then(function(){
+        document.location.reload(true);
+      })
+      console.log(vm.userName + " " + vm.score);
       $interval.cancel(vm.timer);
     }
     else if(vm.board[newY][newX] == 3 ){
@@ -103,7 +109,12 @@ function snake($http, $interval){
   })
 
   vm.board = vm.addApple(vm.addSnake(createBoardArray()));
-  vm.timer = $interval(vm.move, 100);
+
+
+  vm.start = function(){
+    vm.timer = $interval(vm.move, 100);
+  }
+
 }
 
 function whereApple(snake){
