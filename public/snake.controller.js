@@ -11,6 +11,7 @@ function snake($http, $interval){
   vm.snake = [[1,1],[2,1]];
   vm.apple = [-1,-1];
   vm.nextMove = [1,0];
+  vm.lastMove =[0,1];
   vm.lost = false;
   vm.score = 0;
   vm.topTen=[];
@@ -34,7 +35,7 @@ function snake($http, $interval){
       where = vm.apple;
     }
     else{
-      where = whereApple(vm.snake);
+      where = whereApple(boardArray);
       vm.apple = [where[0],where[1]];
     }
     boardArray[where[0]][where[1]] = 3;
@@ -43,6 +44,7 @@ function snake($http, $interval){
 
   vm.move = function(){
     var currentPosition = vm.snake[vm.snake.length-1];
+    vm.lastMove = vm.nextMove;
     if(vm.nextMove[0]==1){
       vm.snake.push([currentPosition[0]+1,currentPosition[1]]);
     }
@@ -64,7 +66,6 @@ function snake($http, $interval){
       sendScore.then(function(){
         document.location.reload(true);
       })
-      console.log(vm.userName + " " + vm.score);
       $interval.cancel(vm.timer);
     }
     else if(vm.board[newY][newX] == 3 ){
@@ -94,22 +95,21 @@ function snake($http, $interval){
   }
 
   window.addEventListener("keydown", function(e){
-    if(e.keyCode == 37 && vm.nextMove != "0,1"){
+    if(e.keyCode == 37 && vm.lastMove != "0,1"){
       vm.nextMove = [0,-1];
     }
-    if(e.keyCode == 39 && vm.nextMove != "0,-1"){
+    if(e.keyCode == 39 && vm.lastMove != "0,-1"){
       vm.nextMove = [0,1];
     }
-    if(e.keyCode == 38 && vm.nextMove != "1,0"){
+    if(e.keyCode == 38 && vm.lastMove != "1,0"){
       vm.nextMove = [-1,0];
     }
-    if(e.keyCode == 40 && vm.nextMove != "-1,0"){
+    if(e.keyCode == 40 && vm.lastMove != "-1,0"){
       vm.nextMove = [1,0];
     }
   })
 
   vm.board = vm.addApple(vm.addSnake(createBoardArray()));
-
 
   vm.start = function(){
     vm.timer = $interval(vm.move, 100);
@@ -117,15 +117,14 @@ function snake($http, $interval){
 
 }
 
-function whereApple(snake){
-  var x =Math.floor(Math.random() * (24 - 1) + 1);
+function whereApple(boardArray){
+  var x = Math.floor(Math.random() * (24 - 1) + 1);
   var y = Math.floor(Math.random() * (24 - 1) + 1);
-  for(var i = 0; i < snake.length; i++){
-    if(x == snake[i][1] && y == snake[i][0]){
-      whereApple(snake);
-    }
+  while(boardArray[y][x] == 2){
+    x = Math.floor(Math.random() * (24 - 1) + 1);
+    y = Math.floor(Math.random() * (24 - 1) + 1);
   }
-  return [y,x];
+  return ([y,x]);
 }
 
 function createBoardArray(){
