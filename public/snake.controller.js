@@ -72,7 +72,6 @@ function snake($http, $interval){
     }
   }
 
-
   vm.color = function(color){
     if(color == 0){
       return "black";
@@ -89,17 +88,17 @@ function snake($http, $interval){
   }
 
   window.addEventListener("keydown", function(e){
-    if(e.keyCode == 37){
+    if(e.keyCode == 37 && vm.nextMove != "0,1"){
       vm.nextMove = [0,-1];
     }
-    if(e.keyCode == 39){
+    if(e.keyCode == 39 && vm.nextMove != "0,-1"){
       vm.nextMove = [0,1];
     }
-    if(e.keyCode == 38){
-      vm.nextMove =[-1,0];
+    if(e.keyCode == 38 && vm.nextMove != "1,0"){
+      vm.nextMove = [-1,0];
     }
-    if(e.keyCode == 40){
-      vm.nextMove =[1,0];
+    if(e.keyCode == 40 && vm.nextMove != "-1,0"){
+      vm.nextMove = [1,0];
     }
   })
 
@@ -115,7 +114,7 @@ function whereApple(snake){
       whereApple(snake);
     }
   }
-  return [x,y];
+  return [y,x];
 }
 
 function createBoardArray(){
