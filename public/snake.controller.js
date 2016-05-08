@@ -17,7 +17,7 @@ function snake($http, $interval){
   vm.topTen=[];
   var highScores = $http.get("/top");
   highScores.then(function(highScores){
-    vm.topTen = _.sortBy(highScores.data,"score").reverse();
+    vm.topTen = _.first(_.sortBy(highScores.data,"score").reverse(),25);
   })
   vm.addSnake = function(boardArray){
     for (var i = 0; i < vm.snake.length; i++)
